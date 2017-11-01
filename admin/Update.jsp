@@ -1,0 +1,98 @@
+<%@ page contentType="text/html;charset=EUC-KR" %>
+<%@ page import ="java.util.*,mall.*" %> 
+<% 
+request.setCharacterEncoding("euc-kr");
+%>
+<jsp:useBean id="memMgr" class="mall.MemberMgr" />
+
+<%
+    String admin_id = (String)session.getAttribute("adminKey");
+
+	if(admin_id == null) {
+		response.sendRedirect("../admin/AdminLogin.jsp");
+	}
+%>
+
+<html>
+<head>
+<title>회원수정</title>
+<link href="../style.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="script.js"></script>
+</head>
+<body bgcolor="#996600">
+<br>
+
+	<%
+	String mem_id = request.getParameter("mem_id");
+	RegisterBean regBean= memMgr.getMember(mem_id);
+	%>
+	 
+	<table width="800" align="center" bgcolor="#FFFFff">
+	<tr> 
+	<td align="center" bgcolor="#FFFFff">
+
+		<table width="800" align="center" bgcolor="#FFFFff" border="1">
+		<form name="regForm" method="post" action="UpdateProc.jsp">
+		<tr align="center" bgcolor="#996600"> 
+		<td colspan="3"><font color="#FFFFFF"><b> 
+		<%=regBean.getMem_name()%>
+		회원님의 정보를 수정합니다.</b></font> </td>
+		</tr>
+		<tr> 
+		<td>아이디</td>
+		<td><%=regBean.getMem_id()%></td>
+		</tr>
+		<tr> 
+		<td>패스워드</td>
+		<td><input type="text" name="mem_passwd" value="<%=regBean.getMem_passwd()%>"></td>
+		</tr>
+		<tr> 
+		<td>이름</td>
+		<td><input type="text" name="mem_name" value="<%=regBean.getMem_name()%>"></td>
+		</tr>
+		<tr> 
+		<td>주민등록번호</td>
+		<td><input type="text" name="mem_num1" size="6" value="<%=regBean.getMem_num1()%>">-
+		<input type="text" name="mem_num2" size="7"	value="<%=regBean.getMem_num2()%>"></td>
+		</tr>
+		<tr> 
+		<td>이메일</td>
+		<td><input type="text" name="mem_email"  size="30" value="<%=regBean.getMem_email()%>"></td>
+		</tr>
+		<tr> 
+		<td>전화번호</td>
+		<td><input type="text" name="mem_phone" value="<%=regBean.getMem_phone()%>"></td>
+		</tr>
+		<tr> 
+		<td>우편번호</td>
+		<td><input type="text" name="mem_zipcode" value="<%=regBean.getMem_zipcode()%>">
+		<input type="button" value="우편번호찾기" onClick="zipCheck()">
+		</td>
+		</tr>
+		<tr> 
+		<td>주소</td>
+		<td><input type="text" name="mem_address" size="50" value="<%=regBean.getMem_address()%>"></td>
+		</tr>
+		<tr> 
+		<td>블로그</td>
+		<td><input type="text" name="mem_blog" size="50" value="<%=regBean.getMem_blog()%>">
+
+		</td>
+		</tr>
+		<tr> 
+		<td colspan="2" align="center"><input type="submit" value="수정완료"> 
+		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+		<input type="reset" value="다시쓰기"> 
+		</td>
+		</tr>
+		<input type="hidden" name="mem_id" value="<%=mem_id%>">
+		</form>
+		</table>
+
+	</td>
+	</tr>
+	</table>
+	
+		
+</body>
+</html>
